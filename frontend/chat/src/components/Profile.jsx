@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import pic from '../../public/pr.jpg'
+import { useNavigate } from 'react-router-dom';
 const Profile = () => {
-  
-    const [profileData, setProfileData] = useState(null);
-    const data=localStorage.getItem("data");
-    setProfileData(JSON.parse(data));
-    const data1=JSON.parse(data);
-    console.log("Profile data from localStorage:", data1);
+   
+  const navigate = useNavigate();
+   const data=localStorage.getItem("data")
+   const userData = JSON.parse(data);
+   const username = JSON.stringify(userData.user.username);
+   const email = JSON.stringify(userData.user.email);
+
+    const handleLogout = () => {
+       localStorage.removeItem("data");
+       navigate('/login');
+    }
 
   return (
     <div className='h-screen w-full flex justify-center items-center bg-black text-white'>
@@ -15,8 +21,9 @@ const Profile = () => {
             <div>
                 <img className='h-32 w-32 rounded-full mb-4' src={pic} alt="Profile" />
             </div>
-            <h1 className='text-2xl font-bold mb-4'>{profileData.user.username}</h1>
-            <h1 className='text-xl font-semibold mb-2'>{profileData.user.email}</h1>
+            <h1 className='text-2xl font-bold mb-4'>{username}</h1>
+            <h1 className='text-xl font-semibold mb-2'>{email}</h1>
+            <button onClick={handleLogout} className='bg-red-500 text-white px-4 py-2 mt-3 rounded'>Logout</button>
 
     </div>
       
