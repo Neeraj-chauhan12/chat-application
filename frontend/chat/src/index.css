@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+.users::-webkit-scrollbar {
+  display: none;
+}
+
+.messages::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,63 @@
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import { BACKEND_URL } from '../utils/utils';
+
+
+const AllUsers = () => {
+    const [AllUser, setAllUser] =useState([])
+      
+    useEffect(()=>{
+        FetchAllUsers();
+    },[])
+    const FetchAllUsers=async()=>{
+        try {
+            const response = await axios.get(`${BACKEND_URL}/api/user/profile`,{
+                withCredentials:true
+            });
+            const data = response.data.user;
+            console.log("All users data:", data);
+            setAllUser(data);
+        } catch (error) {
+            console.log("Error while fetching all users", error)
+        }
+
+    }
+
+  return (
+    <div className='h-full w-full '>
+        <div className='h-[10%] w-full border-b-2 border-gray-300 flex items-center justify-center'>
+            <input className='border-2 border-gray-300 rounded-lg p-2 w-[90%]' type="text" placeholder='Search users...' />
+        </div>
+
+        {/* List of users */}
+        <div className='h-[5%] w-full border-b-2 border-gray-300 flex items-center justify-center'>
+            <h1>All Users</h1>
+        </div>
+
+        {/* Example user */}
+        <div className='users h-[85%] w-full overflow-y-scroll'>
+            
+                {
+                    AllUser.map((user)=>(
+                        <div key={user._id} className='h-[10%] w-full flex bg-gray-600 items-center justify-start px-3 hover:bg-gray-800 cursor-pointer'>
+                            <div className='h-10 w-10 rounded-full bg-gray-500 flex items-center justify-center text-white mr-3'>
+                                {user.username.charAt(0).toUpperCase()}
+                            </div>
+                            <div className='flex flex-col'>
+                                <span className='text-sm font-semibold'>{user.username}</span>
+                                <span className='text-xs text-gray-400'>{user.email}</span>
+                            </div>
+                        </div>
+                    ))
+                }
+        
+            
+        </div>
+
+        
+      
+    </div>
+  )
+}
+
+export default AllUsers

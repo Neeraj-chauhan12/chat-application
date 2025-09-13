@@ -46,7 +46,7 @@ exports.loginUser=async(req,res)=>{
         
         const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'1d'});
         res.cookie('token',token)
-        res.status(200).json({message:"Login successful", user, token});
+        res.status(200).json({message:"Login successful",user,token});
 
         
     } catch (error) {
@@ -65,7 +65,7 @@ exports.logoutUser=(req,res)=>{
 // Get user profile
 exports.getUserProfile=async(req,res)=>{
     try {
-        const user=await User.find({ _id: { $ne: req.user._id }}).select('-password');
+        const user=await User.find({_id: { $ne: req.user._id }}).select('-password');
         if(!user){
             return res.status(404).json({message:"User not found"});
         }
@@ -74,3 +74,5 @@ exports.getUserProfile=async(req,res)=>{
         res.status(500).json({message:"Server error", error:error.message});
     }
 }
+
+//_id: { $ne: req.user._id }}).
