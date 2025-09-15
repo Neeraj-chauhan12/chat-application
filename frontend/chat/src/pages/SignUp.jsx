@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BACKEND_URL } from '../utils/utils';
 import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthProvider';
 
 const SignUp = () => {
+	const [auth, setAuth] = useAuth();
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -25,11 +27,12 @@ const SignUp = () => {
             const response = await axios.post(`${BACKEND_URL}/api/user/register`, userData, { withCredentials: true });
             console.log("Signup response:", response.data);
             localStorage.setItem('data', JSON.stringify(response.data));
+			setAuth(response.data);
             toast.success("Signup successful! Redirecting to login...");
             navigate('/login');
         } catch (error) {
             console.error("Error during signup:", error);
-            toast.error("Signup failed. Please try again.");
+            toast.error(error.response?.data?.message || "Signup failed. Please try again.");
         }
 	};
 

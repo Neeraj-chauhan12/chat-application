@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BACKEND_URL } from '../utils/utils';
 import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthProvider';
 
 const Login = () => {
+
+	const [auth, setAuth] = useAuth();
 
     const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -23,11 +26,12 @@ const Login = () => {
 			const response = await axios.post(`${BACKEND_URL}/api/user/login`, userData, { withCredentials: true });
 			console.log("Login response:", response.data);
             localStorage.setItem('data', JSON.stringify(response.data));
+			setAuth(response.data);
 			toast.success("Login successful! Redirecting...");
 			navigate('/');
 		} catch (error) {
 			console.error("Error during login:", error);
-			toast.error("Login failed. Please try again.");
+			toast.error(error.response?.data?.message || "Login failed. Please try again.");
 		}
 	};
 

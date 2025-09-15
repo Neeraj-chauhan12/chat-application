@@ -1,6 +1,7 @@
 import React from 'react'
 import pic from '../../public/pr.jpg'
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 const Profile = () => {
    
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ const Profile = () => {
 
     const handleLogout = () => {
        localStorage.removeItem("data");
+       window.location.reload();
+       toast.success("Logged out successfully");
        navigate('/login');
     }
 

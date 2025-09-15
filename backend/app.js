@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./src/dbconnection/db');
 const userRoutes = require('./src/routes/userRoutes');
+const messageRoutes = require('./src/routes/messageRoute');
 const cookieParser = require('cookie-parser');
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/api/user', userRoutes);
+app.use('/api/message',messageRoutes);
 
 
 
