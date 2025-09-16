@@ -5,6 +5,7 @@ import SignUp from './pages/SignUp'
 import Login from './pages/Login'
 import {Toaster} from 'react-hot-toast';
 import { useAuth } from './context/AuthProvider'
+import Loading from './components/Loading'
 
 const App = () => {
 
@@ -19,6 +20,7 @@ const App = () => {
       </Routes>
       <Toaster />
     </Router>
+    
   )
 }
 

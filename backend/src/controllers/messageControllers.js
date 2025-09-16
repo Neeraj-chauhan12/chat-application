@@ -47,7 +47,9 @@ const getMessages = async (req, res) => {
       return res.status(200).json([]); // No conversation means no messages
     }
 
-   const messages = conversation.messages;;
+   const messages = conversation.messages.length ? await Message.find({
+      _id: { $in: conversation.messages },
+    }).sort({ createdAt: 1 }) : [];
    res.status(200).json(messages);
   } catch (error) {
     res.status(500).json({ error: error.message });
