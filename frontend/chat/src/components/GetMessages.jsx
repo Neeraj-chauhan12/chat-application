@@ -1,8 +1,9 @@
-import axios from 'axios';
+import axios, { all } from 'axios';
 import React, { useEffect, useState } from 'react'
 import { BACKEND_URL } from '../utils/utils';
 
 const GetMessages = ({ user }) => {
+
 
     const [messages, setMessages] =useState([]); 
 
@@ -19,14 +20,19 @@ const GetMessages = ({ user }) => {
         getMessages();
     }, [user]);
 
-  console.log("Selected user in GetMessages:",messages);
+    const senderId=JSON.parse(localStorage.getItem("data"))
+    console.log("sender id from local storage",senderId.user._id);
+     console.log("user id",user?._id);
+    
+     const messageStyle = senderId.user._id === user?._id;
+     console.log("Message Style:", messageStyle);
   return (
     <div>
 
         {
             messages.map((message) => (
-                <div key={message._id} className={`h-[5%] w-full flex ${message.isSender ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`h-full max-w-[50%] rounded-t-2xl ${message.isSender ? 'rounded-l-2xl bg-blue-400' : 'rounded-r-2xl bg-gray-300'} text-white px-5 py-2 flex items-center justify-start`}>
+                <div key={message._id} className={`h-[5%] w-full my-2 flex ${messageStyle ? 'justify-start' : 'justify-end'}`}>
+                    <div className={`h-full max-w-[50%] rounded-t-2xl ${messageStyle ? 'rounded-r-2xl bg-gray-400 rounded-t-2xl' : 'rounded-l-2xl rounded-t-2xl bg-blue-300'} text-white px-5 py-2 flex items-center justify-start`}>
                         <h1>{message.message}</h1>
                     </div>
                 </div>

@@ -1,18 +1,11 @@
 import React, { use } from 'react';
 import { IoSend } from 'react-icons/io5';
 import GetMessages from './GetMessages';
+import Typedtext from './Typedtext';
 
 const Messages = ({ user }) => {
-  const handleMessageSend = () => {
-    // Logic to send the message
-    console.log('Message sent!');
-  };
 
-  const handleMessageKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleMessageSend();
-    }
-  };
+  
 
   return (
     <div className="h-full w-full">
@@ -25,16 +18,9 @@ const Messages = ({ user }) => {
        <GetMessages user={user} />
 
       </div>
-      <div className="h-[10%] w-full border-t-2 border-gray-300 flex items-center justify-center">
-        <input
-          onKeyPress={handleMessageKeyPress}
-          className="h-10 w-[90%] rounded-full border-2 border-gray-300 px-5"
-          type="text"
-          placeholder="Type a message..."
-        />
-        <button onClick={handleMessageSend} className="ml-2 text-blue-500">
-          <IoSend size={35} />
-        </button>
+      <div className="h-[10%] w-full border-t-2 border-gray-300 ">
+
+      <Typedtext  user={user} />
       </div>
     </div>
   );
