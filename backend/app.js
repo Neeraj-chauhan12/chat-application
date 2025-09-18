@@ -1,5 +1,7 @@
 const express = require('express');
-const app = express();
+const app=require('./server').app;
+const server=require('./server').server;
+const io=require('./server').io;
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./src/dbconnection/db');
@@ -29,6 +31,6 @@ app.use('/api/message',messageRoutes);
 
 const PORT = process.env.PORT || 5000;
 connectDB();
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

@@ -1,5 +1,5 @@
 import axios, { all } from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { BACKEND_URL } from '../utils/utils';
 
 const GetMessages = ({ user }) => {
@@ -20,9 +20,20 @@ const GetMessages = ({ user }) => {
         getMessages();
     }, [user]);
 
+  const lastMsgRef = useRef();
+  useEffect(() => {
+    setTimeout(() => {
+      if (lastMsgRef.current) {
+        lastMsgRef.current.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+    }, 100);
+  }, [messages]);
+
+
 
         const currentUserId = JSON.parse(localStorage.getItem("data")).user._id;
-
         return (
             <div>
                 {messages.map((message) => {
@@ -30,6 +41,7 @@ const GetMessages = ({ user }) => {
                     return (
                         <div
                             key={message._id}
+                            ref={lastMsgRef}
                             className={`h-[5%] w-full my-2 flex ${isCurrentUser ? 'justify-end' : 'justify-start'}`}
                         >
                             <div
