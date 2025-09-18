@@ -8,7 +8,7 @@ import { IoArrowBackSharp } from "react-icons/io5";
 
 const ChatPage = () => {
   const [selectedUser, setSelectedUser] = useState(null);
-  const [showProfile, setShowProfile] = useState(false);
+  const [showProfile, setShowProfile] = useState(false)
 
   // Handler for selecting a user
   const handleUserSelect = (user) => {
@@ -27,6 +27,9 @@ const ChatPage = () => {
   const handleCloseProfile = () => {
     setShowProfile(false);
   };
+
+  
+  
 
   return (
     <div className="h-screen w-screen flex md:flex-row flex-col text-white relative">
@@ -50,7 +53,7 @@ const ChatPage = () => {
           <span className="font-bold">{selectedUser ? selectedUser.name : ''}</span>
         </div>
         {/* Messages component: pass selected user */}
-        {selectedUser && <Messages user={selectedUser} />}
+        {selectedUser && <Messages user={selectedUser}  />}
       </div>
 
       {/* Profile: show only on desktop */}

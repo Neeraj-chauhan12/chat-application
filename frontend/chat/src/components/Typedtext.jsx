@@ -17,7 +17,7 @@ const Typedtext = ({ user }) => {
           withCredentials: true,
         }
         );
-        setMessage(...message,response.data.message);
+        setMessage([...message, response.data.message]);
          console.log("user id",user?._id);
         console.log("sender id",message.senderId);
         console.log("Message send response:",response.data.message);
