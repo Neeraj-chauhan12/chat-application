@@ -1,11 +1,25 @@
 import axios, { all } from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import { BACKEND_URL } from '../utils/utils';
+import { userSocketContext } from '../context/SocketProvider';
+import sound from "../assets/bell-notification-337658.mp3"
 
 const GetMessages = ({ user }) => {
 
+ const { socket } = userSocketContext();
+  const [messages,setMessages]=useState([])
 
-    const [messages, setMessages] =useState([]); 
+  useEffect(() => {
+    socket?.on('receive-message', (newMessage) => {
+       const notification=new Audio(sound)
+       notification.play();
+      console.log('Message received:', newMessage);
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      // Here you can update your message list state to include the new message
+    });
+    return () => { socket?.off('newMesage'); }
+
+  }, [socket, messages,setMessages]);
 
     useEffect(() => {
         const getMessages = async () => {

@@ -1,35 +1,18 @@
 import axios from 'axios';
-import React, {  useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { IoSend } from 'react-icons/io5';
 import { BACKEND_URL } from '../utils/utils';
-import { userSocketContext } from '../context/SocketProvider';
 
 const Typedtext = ({ user }) => {
-  const { socket } = userSocketContext();
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    socket?.on('receive-message', (newMessage) => {
-      console.log('Message received:', newMessage);
-      setMessage((prevMessages) => [...prevMessages, newMessage]);
-      // Here you can update your message list state to include the new message
-    });
-    return () => { socket?.off('receive-message'); }
-
-  }, [socket, message,setMessage]);
-
-
+     
+     const [message,setMessage]=useState([])
       const handleMessageSend = async (e) => {
         e.preventDefault();
         
-        const response=await axios.post(`${BACKEND_URL}/api/message/send/${user._id}`,
-       {
-          message: message,
+        const response=await axios.post(`${BACKEND_URL}/api/message/send/${user._id}`, { 
+          message: message
         },
-        {
-          withCredentials: true,
-        }
-        );
+        { withCredentials: true,} );
         setMessage([...message, response.data.message]);
          setMessage(''); // Clear the input field after sending
   };
