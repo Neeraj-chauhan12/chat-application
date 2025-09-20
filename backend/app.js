@@ -1,7 +1,6 @@
 const express = require('express');
 const app=require('./server').app;
 const server=require('./server').server;
-const io=require('./server').io;
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./src/dbconnection/db');

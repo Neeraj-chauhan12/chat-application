@@ -14,7 +14,7 @@ const io= Server(server,{
 
 //real time messaging
 
-exports.getReceiverId = (receiverId) => {
+const getReceiverSocketId = (receiverId) => {
     return users[receiverId];
 };
 
@@ -39,5 +39,5 @@ io.on("connection",(socket)=>{
     });})
 
     module.exports={
-    app,server,io
+    app,server,io,getReceiverSocketId
     }

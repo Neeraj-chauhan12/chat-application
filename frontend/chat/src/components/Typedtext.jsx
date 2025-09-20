@@ -1,10 +1,23 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import { IoSend } from 'react-icons/io5';
 import { BACKEND_URL } from '../utils/utils';
+import { userSocketContext } from '../context/SocketProvider';
 
 const Typedtext = ({ user }) => {
-    const [message, setMessage] = useState('');
+  const { socket } = userSocketContext();
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    socket?.on('receive-message', (newMessage) => {
+      console.log('Message received:', newMessage);
+      setMessage((prevMessages) => [...prevMessages, newMessage]);
+      // Here you can update your message list state to include the new message
+    });
+    return () => { socket?.off('receive-message'); }
+
+  }, [socket, message,setMessage]);
+
 
       const handleMessageSend = async (e) => {
         e.preventDefault();
@@ -22,9 +35,9 @@ const Typedtext = ({ user }) => {
   };
 
 
-  const handleMessageKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleMessageSend();
+  const handleMessageKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleMessageSend(e);
     }
   };
   return (
