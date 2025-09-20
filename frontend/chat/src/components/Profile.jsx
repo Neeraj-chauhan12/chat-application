@@ -2,8 +2,11 @@ import React from 'react'
 import pic from '../../public/pr.jpg'
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { userSocketContext } from '../context/SocketProvider';
 const Profile = () => {
-   
+  
+  const {onlineUsers} = userSocketContext();
+
   const navigate = useNavigate();
    const data=localStorage.getItem("data")
    const userData = JSON.parse(data);
@@ -20,9 +23,10 @@ const Profile = () => {
   return (
     <div className='h-screen w-full flex justify-center items-center bg-black text-white'>
 
-        <div className='h-full w-full flex flex-col justify-center items-center'>
-            <div>
-                <img className='h-32 w-32 rounded-full mb-4' src={pic} alt="Profile" />
+        <div className='h-full  w-full flex flex-col  justify-center items-center'>
+            <div className='relative'>
+                <img className='h-32 w-32  rounded-full mb-4' src={pic} alt="Profile" />
+                {onlineUsers.includes(JSON.parse(localStorage.getItem("data")).user._id) && <div className='h-3 w-3 absolute bg-green-500 rounded-full top-0 right-0 border-2 border-white'></div>}
             </div>
             <h1 className='text-2xl font-bold mb-4'>{username}</h1>
             <h1 className='text-xl font-semibold mb-2'>{email}</h1>

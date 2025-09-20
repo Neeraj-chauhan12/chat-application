@@ -2,15 +2,18 @@ import React, { use } from 'react';
 import { IoSend } from 'react-icons/io5';
 import GetMessages from './GetMessages';
 import Typedtext from './Typedtext';
+import { userSocketContext } from '../context/SocketProvider';
 
 const Messages = ({ user }) => {
 
+  const {onlineUsers} = userSocketContext();
   
 
   return (
     <div className="h-full w-full">
       <div className="h-[10%] w-full border-b-2 border-gray-300 flex items-center justify-center">
         <h1>{user ? user.username : 'Select a user'}</h1>
+        {user && onlineUsers.includes(user._id) && <div className='h-3 w-3 bg-green-500 rounded-full ml-2'></div>}
       </div>
       <div className="messages h-[80%] w-full overflow-y-scroll py-3 px-1">
         {/* Example messages, replace with dynamic messages for selected user */}

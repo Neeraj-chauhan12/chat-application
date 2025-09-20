@@ -12,12 +12,30 @@ const io= Server(server,{
     }
 });
 
+//real time messaging
+
+exports.getReceiverId = (receiverId) => {
+    return users[receiverId];
+};
+
+const users={};
+
 io.on("connection",(socket)=>{
     console.log(`User connected: ${socket.id}`);
+    const userId=socket.handshake.query.userId;
+    console.log("User ID from query:",userId);
+    //users[userId]=socket.id;
+    if(userId){
+        users[userId]=socket.id;
+        console.log("Current users:",users);
+    }
 
+    io.emit("welcome",Object.keys(users )); // Send list of userIds
 
     socket.on("disconnect",()=>{
         console.log("User disconnected",socket.id);
+        delete users[userId];
+        io.emit("welcome",Object.keys(users ));
     });})
 
     module.exports={
